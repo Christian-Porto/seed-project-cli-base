@@ -6,7 +6,7 @@ const User = require("../models/user");
 
 router.get("/", async function(req, res, next) {
   try {
-    const messageFindTodos = await Message.find({}).populate("user");
+    const messageFindTodos = await Message.find({}).populate("userId");
 
     res.status(200).json({
       myMsgSucesso: "Mensagens recuperadas com sucesso!",
@@ -22,25 +22,29 @@ router.get("/", async function(req, res, next) {
 });
 
 router.post("/", async function(req, res, next) {
-  const messsageObject = new Message({
+  if (!req.body.content || !req.body.username || !req.body.userId) {
+    return res.status(400).json({
+      myErrorTitle: "Client-side: Dados incompletos.",
+      myError: "Faltam dados necessários para salvar a mensagem."
+    });
+  }
+  const messageObject = new Message({
     content: req.body.content,
-    user: req.body.user
+    username: req.body.username,
+    userId: req.body.userId
   });
   try {
-    const messageSave = await messsageObject.save();
-
-    await User.findByIdAndUpdate(req.body.user, {
+    const messageSave = await messageObject.save();
+    await User.findByIdAndUpdate(req.body.userId, {
       $push: { messages: messageSave._id }
     });
-
     res.status(201).json({
       myMsgSucesso: "Mensagem salva com sucesso!",
       objMessageSave: messageSave
     });
-  }
-  catch(error) {
+  } catch (error) {
     return res.status(500).json({
-      myErrorTitle: "Serve-side: Um erro aconteceu ao salvar a mensagem.",
+      myErrorTitle: "Server-side: Um erro aconteceu ao salvar a mensagem.",
       myError: error 
     });
   }
@@ -67,15 +71,22 @@ router.patch("/:id", async function(req, res) {
 router.delete("/:id", async function(req, res) {
   const { id } = req.params;
   try {
+    const message = await Message.findById(id);
+    if (!message) {
+      return res.status(404).json({ myMsgError: "Mensagem não encontrada." });
+    }
     await Message.findByIdAndDelete(id);
-    res.status(200).json({ myMsgSucesso: "Mensagem deletada com sucesso!"});
+    await User.findByIdAndUpdate(message.userId, {
+      $pull: { messages: id }
+    });
+    res.status(200).json({ myMsgSucesso: "Mensagem deletada com sucesso!" });
   }
   catch(error) {
     return res.status(500).json({
-      myErrorTitle: "Serve-side: Um erro aconteceu ao deletar a mensagem.",
+      myErrorTitle: "Server-side: Um erro aconteceu ao deletar a mensagem.",
       myError: error 
     });
   }
 });
-
+  
 module.exports = router;
