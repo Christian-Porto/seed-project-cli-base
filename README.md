@@ -1,0 +1,1 @@
+# seed-project-cli-base
