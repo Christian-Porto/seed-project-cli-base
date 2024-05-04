@@ -31,21 +31,22 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formulario.value);
     const userAux: User = new User(
-      this.formulario.get('firstName')?.value,
-      this.formulario.get('lastName')?.value,
       this.formulario.get('password')?.value,
       this.formulario.get('email')?.value,
+      this.formulario.get('firstName')?.value,
+      this.formulario.get('lastName')?.value,
       this.formulario.get('gender')?.value,
       this.formulario.get('personType')?.value,
       this.formulario.get('terms')?.value
     );
+
     this.userService.addUser(userAux).subscribe({
       next: (res: any) => {
         console.log(res.myMsgSucesso);
-        console.log({ content: res.objUserSave.content });
+        console.log({ firstName: res.objUserSave.firstName });
         console.log({ id: res.objUserSave._id });
+        alert('Usuário cadastrado com sucesso!');
       },
       error: (err) => {
         console.log(`$== !!Error (subscribe): - ${err.info_extra} ==`);

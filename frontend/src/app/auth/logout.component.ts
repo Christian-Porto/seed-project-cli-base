@@ -7,7 +7,13 @@ import { Component } from '@angular/core';
   templateUrl: './logout.component.html',
 })
 export class LogoutComponent {
+  
+  isLoggedIn(): boolean {
+    return localStorage.getItem('userId') !== null;
+  }
+
   onLogout() {
-    
+    localStorage.clear();
+    alert('Você foi deslogado com sucesso!');
   }
 }
