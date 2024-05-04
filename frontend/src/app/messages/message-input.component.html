@@ -6,6 +6,6 @@
           required oninvalid="this.setCustomValidity('Campo vazio')" oninput="this.setCustomValidity('')"
         >
       </div>
-      <button type="submit" class="btn btn-primary mt-2">Save my message</button>
+      <button type="submit" class="btn btn-primary mt-2" [disabled]="!isLoggedIn()">Save my message</button>
   </form>
 </div>

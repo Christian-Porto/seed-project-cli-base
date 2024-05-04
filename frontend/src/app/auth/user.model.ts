@@ -1,17 +1,17 @@
 export class User {
-  lastName: string;
-  firstName: string;
   password: string;
   email: string;
-  gender: string;
-  personType: string;
-  terms: boolean;
+  lastName?: string;
+  firstName?: string;
+  gender?: string;
+  personType?: string;
+  terms?: boolean;
 
-  constructor(firstName: string, lastName: string, password: string, email: string, gender: string, personType: string, terms: boolean){
-    this.firstName = firstName;
-    this.lastName = lastName;
+  constructor(password: string, email: string, firstName?: string, lastName?: string, gender?: string, personType?: string, terms?: boolean){
     this.password = password;
     this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.gender = gender;
     this.personType = personType;
     this.terms = terms;
