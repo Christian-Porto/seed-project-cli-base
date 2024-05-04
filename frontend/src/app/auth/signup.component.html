@@ -1,0 +1,78 @@
+<h1>SIGN UP</h1>
+<div class="col-md-8 col-md-offset-2">
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">Nome:</label>
+      <input type="text" id="firstName" class="form-control" formControlName="firstName">
+    </div>
+    @if (formulario.get("firstName")?.errors?.["required"] && formulario.get("firstName")?.touched) {
+      <div><p style="color: red">Nome é obrigatório.</p></div>
+    }
+    <div class="form-group">
+      <label for="lastName">Sobrenome:</label>
+      <input type="text" id="lastName" class="form-control" formControlName="lastName">
+    </div>
+    @if (formulario.get("lastName")?.errors?.["required"] && formulario.get("lastName")?.touched) {
+      <div><p style="color: red">Sobrenome é obrigatório.</p></div>
+    }
+    @if (formulario.get("lastName")?.errors?.["minlength"] && formulario.get("lastName")?.touched) {
+      <div><p style="color: red">Sobrenome deve ter no mínimo 4 caracteres.</p></div>
+    }
+    @if (formulario.get("lastName")?.errors?.["maxlength"] && formulario.get("lastName")?.touched) {
+      <div><p style="color: red">Sobrenome deve ter no máximo 16 caracteres.</p></div>
+    }
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" class="form-control" formControlName="email">
+    </div>
+    @if (formulario.get("email")?.errors?.["required"] && formulario.get("email")?.touched) {
+      <div><p style="color: red">Email é obrigatório.</p></div>
+    }
+    @if (formulario.get("email")?.errors?.["pattern"] && formulario.get("email")?.touched) {
+      <div><p style="color: red">Email inválido.</p></div>
+    }
+    <div class="form-group">
+      <label for="password">Senha:</label>
+      <input type="password" id="password" class="form-control" formControlName="password">
+    </div>
+    @if (formulario.get("password")?.errors?.["required"] && formulario.get("password")?.touched) {
+      <div><p style="color: red">Senha é obrigatória.</p></div>
+    }
+    <div class="form-group">
+      <label for="gender">Sexo:</label>
+      <select id="gender" class="form-control" formControlName="gender" required>
+        <option value="" disabled selected>Selecione...</option>
+        <option value="masculino">Masculino</option>
+        <option value="feminino">Feminino</option>
+      </select>
+    </div>
+    @if (formulario.get("gender")?.errors?.["required"] && formulario.get("gender")?.touched) {
+      <div><p style="color: red">O campo de sexo é obrigatório.</p></div>
+    }
+    <div class="form-group">
+      <label class="mt-2">Tipo de Pessoa:</label>
+      <div>
+        <label class="radio-inline" style="margin-right: 20px;">
+          <input type="radio" formControlName="personType" value="fisica" required> Pessoa Física
+        </label>
+        <label class="radio-inline">
+          <input type="radio" formControlName="personType" value="juridica" required> Pessoa Jurídica
+        </label>
+      </div>
+    </div>
+    @if (formulario.get("personType")?.errors?.["required"] && formulario.get("personType")?.touched) {
+      <div><p style="color: red">É necessário selecionar o tipo de pessoa.</p></div>
+    }
+    <div class="form-group checkbox mt-2">
+      <label>
+        <input type="checkbox" formControlName="terms" required>
+        Aceito os <a href="https://www.lipsum.com/">termos de uso</a>.
+      </label>
+    </div>
+    @if (formulario.get("terms")?.errors?.["required"] && formulario.get("terms")?.touched) {
+      <div><p style="color: red">É necessário aceitar os termos de uso para se cadastrar.</p></div>
+    }
+    <br/>
+    <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid">Cadastrar</button>
+  </form>
+</div>

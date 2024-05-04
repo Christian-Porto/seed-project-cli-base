@@ -1,0 +1,25 @@
+<article class="panel panel-default mt-2">
+  <div class="panel-body">
+    {{ messageVarClasse().content }}
+  </div>
+  <footer class="panel-footer">
+    <div class="author">
+      {{ messageVarClasse().username }}
+    </div>
+    <div class="config">
+      <a (click)="onClick()">Edit</a>
+      <a (click)="onDelete()">Delete</a>
+    </div>
+  </footer>
+  <div class="mt-2">
+    <form (ngSubmit)="onEdit(refLocalForm)" #refLocalForm="ngForm" ngNativeValidate [hidden]="showEditForm">
+        <div class="form-group">
+          <label for="myContent">Editar mensagem</label>
+          <input type="text" id="myContent" class="form-control" ngModel name="myContentngForm"
+            required oninvalid="this.setCustomValidity('Campo vazio')" oninput="this.setCustomValidity('')"
+          >
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Edit my message</button>
+    </form>
+  </div>
+</article>

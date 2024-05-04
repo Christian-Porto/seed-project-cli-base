@@ -1,0 +1,8 @@
+<div class="col-md-8 col-md-offset-2">
+  @for (message of messages; track $index){
+    <app-message-signal [messageVarClasse]="message" (outputMessage)="message.content = $event">
+    </app-message-signal>
+  } @empty {
+    messages é uma lista vazia
+  }
+</div>

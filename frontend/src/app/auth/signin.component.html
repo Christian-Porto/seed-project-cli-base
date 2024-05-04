@@ -1,0 +1,32 @@
+<h1>SIGN IN</h1>
+<div class="col-md-8 col-md-offset-2">
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" class="form-control" formControlName="email">
+    </div>
+    @if (formulario.get("email")?.errors?.["required"] && formulario.get("email")?.touched) {
+      <div><p style="color: red;">Email é obrigatório.</p></div>
+    }
+    @if (formulario.get("email")?.errors?.["pattern"] && formulario.get("email")?.touched) {
+      <div><p style="color: red;">Email inválido.</p></div>
+    }
+    <div class="form-group">
+      <label for="password">Senha:</label>
+      <input type="password" id="password" class="form-control" formControlName="password">
+    </div>
+    @if (formulario.get("password")?.errors?.["required"] && formulario.get("password")?.touched) {
+      <div><p style="color: red;">Senha é obrigatório.</p></div>
+    }
+    @if (formulario.get("password")?.errors?.["minlength"] && formulario.get("password")?.touched) {
+      <div><p style="color: red;">Senha deve ter no mínimo 4 caracteres.</p></div>
+    }
+    @if (formulario.get("password")?.errors?.["minusculoF"] && formulario.get("password")?.touched) {
+      <div><p style="color: red;">Senha aceita apenas letras minúsculas.</p></div>
+    }
+    <br>
+    <button class="btn btn-primary" type="submit" [disabled]="!formulario.valid">
+      Logar
+    </button>
+  </form>
+</div>
