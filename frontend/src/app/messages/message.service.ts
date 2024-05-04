@@ -49,12 +49,12 @@ export class MessageService {
     return this.httpClient.get<any>(`${this.baseUrl}/message`).pipe(
       map((response: any) => {
 
-        const messagesResponseRecebida = response.objsMessagesRecuperados;
+        const messagesResponse = response.objsMessagesRecuperados;
 
         let transformedCastMessagesModelFrontend: Message [] = [];
-        for(let message of messagesResponseRecebida) {
+        for(let message of messagesResponse) {
           transformedCastMessagesModelFrontend.push(
-            new Message(message.content, "User", message._id)
+            new Message(message.content, message.username, message._id)
           );
         }
         this.messagesService = [...transformedCastMessagesModelFrontend];
